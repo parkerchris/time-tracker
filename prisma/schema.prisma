@@ -10,4 +10,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Tenant {
+  id String @id @default(uuid())
+  name String @unique
+  createAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users User[]
+  activities Activity[]
+}
 
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  createAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String?
+  tenantId String?
+  tenant Tenant? @relation(fields: [tenantId], references: [id])
+  activities Activity[]
+}
+
+model Activity {
+  id String @id @default(uuid())
+  name String?
+  startAt DateTime
+  endAt DateTime?
+  createAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId String?
+  tenant Tenant? @relation(fields: [tenantId], references: [id])
+  userId String
+  user User? @relation(fields: [userId], references: [id])
+}
