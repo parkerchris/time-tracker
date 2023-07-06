@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "Tenant" (
     "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" TEXT,
     "createAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -12,9 +12,10 @@ CREATE TABLE "Tenant" (
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "name" TEXT,
+    "avatar" TEXT,
     "createAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "name" TEXT,
     "tenantId" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -33,9 +34,6 @@ CREATE TABLE "Activity" (
 
     CONSTRAINT "Activity_pkey" PRIMARY KEY ("id")
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "Tenant_name_key" ON "Tenant"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
